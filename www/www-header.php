@@ -22,4 +22,14 @@ if ('@data_dir@' == '@' . 'data_dir@') {
     //pear installation; files are in include path
     require_once 'SemanticScuttle/header.php';
 }
+
+// no bookmarks without login
+if (!$publicBookmarks) {
+    if (!$userservice->isLoggedOn()) {
+        if ('login' != basename($_SERVER["SCRIPT_FILENAME"], '.php')) {
+            header('Location: ' . createURL('login'));
+        }
+    }
+}
+
 ?>

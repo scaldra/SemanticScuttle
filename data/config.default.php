@@ -135,6 +135,12 @@ $cleanurls = false;
 $debugMode = false;
 
 
+/**
+ * Are the bookmarks public?
+ *
+ * @var boolean
+ */
+$publicBookmarks = true;
 
 /***************************************************
  * Database configuration
