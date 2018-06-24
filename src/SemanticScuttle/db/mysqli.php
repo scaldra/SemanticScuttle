@@ -46,6 +46,7 @@ class sql_db
 		{
 			if (@mysqli_select_db($this->db_connect_id, $this->dbname))
 			{
+				$this->sql_query( "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''))");
 				return $this->db_connect_id;
 			}
 		}

@@ -49,10 +49,16 @@ $currentUserId = $userservice->getCurrentUserId();
 
 $exploded = isset($_SERVER['PATH_INFO'])
     ? explode('/', $_SERVER['PATH_INFO']) : null;
+
+
 if(count($exploded) == 4) {
     list($url, $range, $terms, $page) = $exploded;
 } else if (count($exploded) == 2) {
     list($url, $range) = $exploded;
+    $terms = $page = NULL;
+} else if (count($exploded) == 1) {
+    list($url) = $exploded;
+    $range = 'all';
     $terms = $page = NULL;
 } else {
     list($url, $range, $terms) = $exploded;

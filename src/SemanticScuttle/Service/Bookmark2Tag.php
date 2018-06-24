@@ -691,7 +691,7 @@ class SemanticScuttle_Service_Bookmark2Tag extends SemanticScuttle_DbService
         }
 
         if ($sortOrder == 'alphabet_asc') {
-            usort($output, create_function('$a,$b','return strcasecmp(utf8_deaccent($a["tag"]), utf8_deaccent($b["tag"]));'));
+            usort($output, "cmp");
         }
 
         return $output;
@@ -711,4 +711,8 @@ class SemanticScuttle_Service_Bookmark2Tag extends SemanticScuttle_DbService
     }
 
 }
-?>
+
+function cmp($a,$b)
+{
+	return strcasecmp(utf8_deaccent($a["tag"]), utf8_deaccent($b["tag"]));
+}

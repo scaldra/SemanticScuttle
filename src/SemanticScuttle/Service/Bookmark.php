@@ -733,12 +733,14 @@ class SemanticScuttle_Service_Bookmark extends SemanticScuttle_DbService
         if (!is_array($tags) && !is_null($tags)) {
             $tags = explode('+', trim($tags));
         }
-
+	if(empty($tags)) {
+		$tagcount=0;
+	}else{
         $tagcount = count($tags);
         for ($i = 0; $i < $tagcount; $i ++) {
             $tags[$i] = trim($tags[$i]);
         }
-
+	}
         // Set up the SQL query.
         $query_1 = 'SELECT DISTINCT ';
         if (SQL_LAYER == 'mysql4') {
@@ -853,7 +855,7 @@ class SemanticScuttle_Service_Bookmark extends SemanticScuttle_DbService
             $aTerms = array_map('trim', $aTerms);
 
             // Search terms in tags as well when none given
-            if (!count($tags)) {
+            if (!empty($tags)) {
                 $query_2 .= ' LEFT JOIN '. $b2tservice->getTableName() .' AS T'
                     . ' ON B.bId = T.bId';
                 $dotags = true;
@@ -1135,8 +1137,9 @@ class SemanticScuttle_Service_Bookmark extends SemanticScuttle_DbService
         }
 
         // Delete final /
-        if (substr($address, -1) == '/') {
-            $address = substr($address, 0, count($address)-2);
+	if (substr($address, -1) == '/') {
+		
+            $address = substr($address, 0, strlen($address)-2);
         }
 
         return $address;
