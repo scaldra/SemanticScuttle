@@ -15,7 +15,6 @@ if (!defined('SQL_LAYER'))
 {
 
 define('SQL_LAYER', 'mysqli');
-
 /**
 * @package dbal_mysqli
 * MySQLi Database Abstraction Layer
@@ -411,11 +410,12 @@ class sql_db
 
 	function sql_report($mode, $query = '')
 	{
+		file_put_contents("/tmp/sql.txt", $query . "\n",FILE_APPEND);
+
 		if (empty($_GET['explain']))
 		{
 			return;
 		}
-
 		global $db, $cache, $starttime, $phpbb_root_path;
 		static $curtime, $query_hold, $html_hold;
 		static $sql_report = '';
@@ -425,7 +425,6 @@ class sql_db
 		{
 			$query = $query_hold;
 		}
-
 		switch ($mode)
 		{
 			case 'display':
