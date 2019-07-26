@@ -71,8 +71,15 @@ if (!($row = $bookmarkservice->getBookmark(intval($bookmark), true))) {
             $description = trim(POST_DESCRIPTION);
             $privateNote = trim(POST_PRIVATENOTE);
             $status = intval(POST_STATUS);
-            $tags = trim(POST_TAGS);            
-            
+	    $tagstemp = explode(",", trim(POST_TAGS));            
+	    $tags = array();
+	    for ($i=0; $i<count($tagstemp); $i++) {
+		    $t = trim ($tagstemp[$i]);
+		    if (strlen($t) > 0) {
+			    $tags[] = $t;
+		    }
+	    }
+
             if (!$bookmarkservice->updateBookmark($bId, $address, $title, $description, $privateNote, $status, $tags)) {
                 $tplvars['error'] = T_('Error while saving your bookmark');
             } else {
